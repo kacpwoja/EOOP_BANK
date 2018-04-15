@@ -49,7 +49,7 @@ public:
 	typedef const iterator const_iterator;
 
 	List();
-	List( const List& src ) { *this = src; };
+	List( const List& src ): List() { *this = src; };
 	~List();
 	List& operator=( const List& rhs );
 

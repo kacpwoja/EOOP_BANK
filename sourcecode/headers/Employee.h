@@ -20,12 +20,12 @@ private:
 	int totalHours;
 public:
 	Employee( std::string id ):
-		Person( id ), totalHours( 0 ), totalEarnings( 0 ) {};
+		Person( id ), totalHours( 0 ), totalEarnings( 0 ), positions() {};
 	Employee( std::string nName, std::string nSurname, std::string nID, Address nAddress ):
-		Person( nName, nSurname, nID, nAddress ), totalHours( 0 ), totalEarnings( 0 ) {};
+		Person( nName, nSurname, nID, nAddress ), totalHours( 0 ), totalEarnings( 0 ), positions() {};
 	Employee( std::string nName, std::string nSurname, std::string nID,
 			  std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() ):
-		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalHours( 0 ), totalEarnings( 0 ) {};
+		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalHours( 0 ), totalEarnings( 0 ), positions() {};
 	~Employee();
 	void newJob( Bank::Branch* branch, double wage, int hours );
 	void quit( Bank::Branch* branch );

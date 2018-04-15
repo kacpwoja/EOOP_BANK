@@ -90,7 +90,7 @@ void PeopleList::removePerson( std::string id )
 	throw std::invalid_argument( "No such ID exists!" );
 }
 
-const Person & PeopleList::getPerson( std::string id )
+Person & PeopleList::getPerson( std::string id )
 {
 	for( List<Person>::iterator it = people.begin(); it != people.end(); it++ )
 	{
@@ -134,9 +134,9 @@ void BankList::removeBank( std::string name )
 	throw std::invalid_argument( "No such name exists!" );
 }
 
-const Bank & BankList::getBank( std::string name )
+Bank & BankList::getBank( std::string name )
 {
-	for( List<Bank>::const_iterator it = banks.begin(); it != banks.end(); it++ )
+	for( List<Bank>::iterator it = banks.begin(); it != banks.end(); it++ )
 	{
 		if( it->getName() == name )
 		{

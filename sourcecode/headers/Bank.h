@@ -13,8 +13,8 @@ private:
 	List<Branch> branches;
 	bool idExists( std::string id ) const noexcept;
 public:
-	Bank() = default;
-	Bank( std::string name ): name( name ) {};
+	Bank(): branches() {};
+	Bank( std::string name ): name( name ), branches() {};
 	~Bank() = default;
 	void newBranch( std::string branchID );
 	void newBranch( std::string branchID, Address address );

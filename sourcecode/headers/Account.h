@@ -20,8 +20,8 @@ class Account
 	double balance;
 	List<Transaction> transactions;
 public:
-	Account() {};
-	Account( Client* client, std::string number, double balance = 0 ): client( client ), balance( balance ), accountNumber( number ) {};
+	Account(): transactions(), client( nullptr ) {};
+	Account( Client* client, std::string number, double balance = 0 ): client( client ), balance( balance ), accountNumber( number ), transactions() {};
 	~Account();
 	double getBalance() const noexcept { return balance; };
 	std::string getNumber() const noexcept { return accountNumber; };

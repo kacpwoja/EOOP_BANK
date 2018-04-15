@@ -12,10 +12,10 @@ class PeopleList
 
 	bool idExists( std::string id ) const noexcept;
 public:
-	PeopleList() = default;
+	PeopleList(): people() {};
 	~PeopleList() = default;
-	PeopleList( const PeopleList& src ) = default;
-	PeopleList& operator=( const PeopleList& rhs ) = default;
+	PeopleList( const PeopleList& src ): people( src.people ) {};
+	PeopleList& operator=( const PeopleList& rhs ) { people = rhs.people; };
 
 	void addClient( std::string id );
 	void addClient( std::string nName, std::string nSurname, std::string nID, Address nAddress );
@@ -29,7 +29,7 @@ public:
 
 	void removePerson( std::string id );
 
-	const Person& getPerson( std::string id );
+	Person& getPerson( std::string id );
 };
 
 class BankList
@@ -38,12 +38,12 @@ class BankList
 
 	bool nameExists( std::string name ) const noexcept;
 public:
-	BankList() = default;
+	BankList(): banks() {};
 	~BankList() = default;
-	BankList( const BankList& src ) = default;
-	BankList& operator=( const BankList& rhs ) = default;
+	BankList( const BankList& src ): banks( src.banks ) {};
+	BankList& operator=( const BankList& rhs ) { banks = rhs.banks; };
 
 	void addBank( std::string name );
 	void removeBank( std::string name );
-	const Bank& getBank( std::string name );
+	Bank& getBank( std::string name );
 };

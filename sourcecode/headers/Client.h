@@ -13,12 +13,12 @@ class Client:
 	double totalBalance;
 public:
 	Client( std::string id ):
-		Person( id ), totalBalance( 0 ) {};
+		Person( id ), totalBalance( 0 ), accounts() {};
 	Client( std::string nName, std::string nSurname, std::string nID, Address nAddress ):
-		Person( nName, nSurname, nID, nAddress ), totalBalance( 0 ) {};
+		Person( nName, nSurname, nID, nAddress ), totalBalance( 0 ), accounts() {};
 	Client( std::string nName, std::string nSurname, std::string nID,
 			std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() ):
-		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalBalance( 0 ) {};
+		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalBalance( 0 ), accounts() {};
 	~Client();
 	void newAccount( Account* acc );
 	void closeAccount( Account* acc );

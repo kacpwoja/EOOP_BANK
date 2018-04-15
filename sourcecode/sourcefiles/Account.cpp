@@ -9,6 +9,7 @@
 
 Account::~Account()
 {
+	if ( client != nullptr )
 	client->closeAccount( this );
 }
 

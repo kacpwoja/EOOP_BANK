@@ -15,9 +15,9 @@ class Bank::Branch
 	List<Employee*> employees;
 	List<Client*> clients;
 public:
-	Branch() {};
-	Branch( std::string id ): id( id ) {};
-	Branch( std::string id, Address address ): id( id ), address( address ) {};
+	Branch(): accounts(), employees(), clients() {};
+	Branch( std::string id ): id( id ), accounts(), employees(), clients() {};
+	Branch( std::string id, Address address ): id( id ), address( address ), accounts(), employees(), clients() {};
 	~Branch();
 	const Address& getAddress() const noexcept { return address; };
 	std::string getID() const noexcept { return id; };
