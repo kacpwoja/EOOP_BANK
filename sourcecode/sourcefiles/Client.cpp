@@ -11,7 +11,7 @@ Client::~Client()
 
 void Client::newAccount( Account * acc )
 {
-	for( List<Account*>::iterator it = accounts.begin(); it != accounts.end(); it++ )
+	for( List<Account*>::const_iterator it = accounts.begin(); it != accounts.end(); it++ )
 	{
 		if( *it == acc )
 			throw std::invalid_argument( "Account already exists!" );

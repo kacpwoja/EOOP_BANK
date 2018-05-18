@@ -10,9 +10,9 @@
 
 bool PeopleList::idExists( std::string id ) const noexcept
 {
-	for( List<Person>::const_iterator it = people.begin(); it != people.end(); it++ )
+	for( List<Person*>::const_iterator it = people.begin(); it != people.end(); it++ )
 	{
-		if( it->getID() == id )
+		if( (*it)->getID() == id )
 		{
 			return true;
 		}
@@ -25,7 +25,7 @@ void PeopleList::addClient( std::string id )
 	if( idExists( id ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Client temp( id );
+	Client* temp = new Client( id );
 	people.push_back( temp );
 }
 
@@ -34,7 +34,7 @@ void PeopleList::addClient( std::string nName, std::string nSurname, std::string
 	if( idExists( nID ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Client temp( nName, nSurname, nID, nAddress );
+	Client* temp = new Client( nName, nSurname, nID, nAddress );
 	people.push_back( temp );
 }
 
@@ -44,7 +44,7 @@ void PeopleList::addClient( std::string nName, std::string nSurname, std::string
 	if( idExists( nID ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Client temp( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
+	Client* temp = new Client( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
 	people.push_back( temp );
 }
 
@@ -53,7 +53,7 @@ void PeopleList::addEmployee( std::string id )
 	if( idExists( id ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Employee temp( id );
+	Employee* temp = new Employee( id );
 	people.push_back( temp );
 }
 
@@ -62,7 +62,7 @@ void PeopleList::addEmployee( std::string nName, std::string nSurname, std::stri
 	if( idExists( nID ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Employee temp( nName, nSurname, nID, nAddress );
+	Employee* temp = new Employee( nName, nSurname, nID, nAddress );
 	people.push_back( temp );
 }
 
@@ -72,15 +72,15 @@ void PeopleList::addEmployee( std::string nName, std::string nSurname, std::stri
 	if( idExists( nID ) )
 		throw std::invalid_argument( "ID already exists!" );
 
-	Employee temp( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
+	Employee* temp = new Employee( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
 	people.push_back( temp );
 }
 
 void PeopleList::removePerson( std::string id )
 {
-	for( List<Person>::iterator it = people.begin(); it != people.end(); it++ )
+	for( List<Person*>::iterator it = people.begin(); it != people.end(); it++ )
 	{
-		if( it->getID() == id )
+		if( (*it)->getID() == id )
 		{
 			people.erase( it );
 			return;
@@ -92,11 +92,11 @@ void PeopleList::removePerson( std::string id )
 
 Person & PeopleList::getPerson( std::string id )
 {
-	for( List<Person>::iterator it = people.begin(); it != people.end(); it++ )
+	for( List<Person*>::iterator it = people.begin(); it != people.end(); it++ )
 	{
-		if( it->getID() == id )
+		if( (*it)->getID() == id )
 		{
-			return *it;
+			return **it;
 		}
 	}
 
@@ -105,9 +105,9 @@ Person & PeopleList::getPerson( std::string id )
 
 bool BankList::nameExists( std::string name ) const noexcept
 {
-	for( List<Bank>::const_iterator it = banks.begin(); it != banks.end(); it++ )
+	for( List<Bank*>::const_iterator it = banks.begin(); it != banks.end(); it++ )
 	{
-		if( it->getName() == name )
+		if( (*it)->getName() == name )
 			return true;
 	}
 	return false;
@@ -118,14 +118,14 @@ void BankList::addBank( std::string name )
 	if( nameExists( name ) )
 		throw std::invalid_argument( "Name already exists!" );
 
-	banks.push_back( Bank( name ) );
+	banks.push_back( new Bank( name ) );
 }
 
 void BankList::removeBank( std::string name )
 {
-	for( List<Bank>::const_iterator it = banks.begin(); it != banks.end(); it++ )
+	for( List<Bank*>::const_iterator it = banks.begin(); it != banks.end(); it++ )
 	{
-		if( it->getName() == name )
+		if( (*it)->getName() == name )
 		{
 			banks.erase( it );
 			return;
@@ -136,11 +136,11 @@ void BankList::removeBank( std::string name )
 
 Bank & BankList::getBank( std::string name )
 {
-	for( List<Bank>::iterator it = banks.begin(); it != banks.end(); it++ )
+	for( List<Bank*>::iterator it = banks.begin(); it != banks.end(); it++ )
 	{
-		if( it->getName() == name )
+		if( (*it)->getName() == name )
 		{
-			return *it;
+			return **it;
 		}
 	}
 	throw std::invalid_argument( "No such name exists!" );

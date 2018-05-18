@@ -16,7 +16,9 @@ Bank::Branch::~Branch()
 void Bank::Branch::newAccount( Client * client, std::string number, double balance )
 {
 	//TODO: check number
-	accounts.push_back( Account( client, number, balance ) );
+	Account* acc = new Account( client, number, balance );
+	accounts.push_back( acc );
+	client->newAccount( acc );
 
 	for( List<Client*>::const_iterator it = clients.begin(); it != clients.end(); it++ )
 	{
@@ -29,15 +31,16 @@ void Bank::Branch::newAccount( Client * client, std::string number, double balan
 
 void Bank::Branch::closeAccount( std::string number )
 {
-	for( List<Account>::iterator it = accounts.begin(); it != accounts.end(); it++ )
+	for( List<Account*>::iterator it = accounts.begin(); it != accounts.end(); it++ )
 	{
-		if( it->getNumber() == number )
+		if( (*it)->getNumber() == number )
 		{
-			const Client* temp = it->getOwner();
+			Client* temp = (*it)->getOwner();
+			temp->closeAccount( *it );
 			accounts.erase( it );
 			for( it = accounts.begin(); it != accounts.end(); it++ )
 			{
-				if( it->getOwner() == temp )
+				if( (*it)->getOwner() == temp )
 					return;
 			}
 

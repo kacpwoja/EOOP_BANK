@@ -11,7 +11,7 @@ class Bank::Branch
 {
 	const std::string id;
 	Address address;
-	List<Account> accounts;
+	List<Account*> accounts;
 	List<Employee*> employees;
 	List<Client*> clients;
 public:
@@ -25,7 +25,7 @@ public:
 	void closeAccount( std::string number );
 	void hire( Employee* emp, double wage, int hours );
 	void fire( Employee* emp );
-	const List<Account>& getAccounts() const noexcept { return accounts; };
+	const List<Account*>& getAccounts() const noexcept { return accounts; };
 	const List<Employee*>& getEmployees() const noexcept { return employees; };
 	const List<Client*>& getClients() const noexcept { return clients; };
 };

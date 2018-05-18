@@ -16,7 +16,9 @@ int main()
 	std::cin >> i;
 	people.addClient( "PESOL" );
 	std::cin >> i;
+	std::cerr << "1\n";
 	br.newAccount( (Client*) &people.getPerson( "PESOL" ), "numbor" );
+	std::cerr << "1\n";
 	std::cin >> i;
 	people.addEmployee( "ZBYCH" );
 	std::cin >> i;

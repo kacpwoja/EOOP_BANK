@@ -25,7 +25,7 @@ public:
 	~Account();
 	double getBalance() const noexcept { return balance; };
 	std::string getNumber() const noexcept { return accountNumber; };
-	const Client* getOwner() const noexcept { return client; };
+	Client* getOwner() const noexcept { return client; };
 	void deposit( double amount, std::string title = "Deposit" );
 	void withdraw( double amount, std::string title = "Withdrawal" );
 	void printTransactions( std::ostream& os = std::cout ) const noexcept;

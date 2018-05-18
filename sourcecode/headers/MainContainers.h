@@ -8,7 +8,7 @@
 
 class PeopleList
 {
-	List<Person> people;
+	List<Person*> people;
 
 	bool idExists( std::string id ) const noexcept;
 public:
@@ -34,7 +34,7 @@ public:
 
 class BankList
 {
-	List<Bank> banks;
+	List<Bank*> banks;
 
 	bool nameExists( std::string name ) const noexcept;
 public:
