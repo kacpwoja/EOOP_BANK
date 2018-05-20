@@ -23,44 +23,33 @@ class List
 	std::size_t length;
 
 public:
+	class ListError final: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+
 	class iterator
 	{
 		friend class List<T>;
 		mutable Node* current;
 	public:
-		iterator(): current( nullptr ) {};
-		iterator( const iterator& src ) { current = src.current; };
+		iterator( const iterator& src ): current( src.current ) {};
 		iterator( iterator&& src ) { current = std::move( current ); };
-		iterator( Node* src ) { current = src; };
+		iterator( Node* src ): current( src ) {};
 		~iterator() = default;
 
-		iterator& operator=( const iterator& rhs )
-		{
-			if( this == &rhs )
-				return *this;
-
-			current = rhs.current;
-
-			returtn *this;
-		};
-		iterator& operator=( iterator&& rhs )
-		{
-			if( this == &rhs )
-				return *this;
-
-			current = std::move( rhs.current );
-			rhs.current = nullptr;
-
-			return *this;
-		};
+		iterator& operator=( const iterator& rhs ) noexcept { current = rhs.current; return *this; };
+		iterator& operator=( iterator&& rhs ) noexcept { current = std::move( rhs.current ); rhs.current = nullptr; return *this; };
 
 		bool operator==( const iterator& rhs ) const noexcept { return current == rhs.current; };
 		bool operator!=( const iterator& rhs ) const noexcept { return current != rhs.current; };
 
-		iterator& operator++() const noexcept { current = current->next; return *this; };
-		iterator operator++( int ) const noexcept { auto temp = *this; current = current->next; return temp; };
-		iterator& operator--() const noexcept { current = current->previous; return *this; };;
-		iterator operator--( int ) const noexcept { auto temp = *this; current = current->previous; return temp; };
+		const iterator& operator++() const noexcept { current = current->next; return *this; };
+		iterator operator++( int ) const noexcept { iterator temp( *this ); current = current->next; return temp; };
+		const iterator& operator--() const noexcept { current = current->previous; return *this; };
+		iterator operator--( int ) const noexcept { iterator temp( *this ); current = current->previous; return temp; };
 
 		T& operator*() noexcept { return current->val; };
 		const T& operator*() const noexcept { return current->val; };
@@ -71,7 +60,7 @@ public:
 	typedef const iterator const_iterator;
 
 	List();
-	List( const List& src ) { *this = src; };
+	List( const List& src ): List() { *this = src; };
 	List( List&& src );
 	~List();
 
@@ -254,7 +243,7 @@ template<typename T>
 T& List<T>::operator[]( int x ) const
 {
 	if( x >= length )
-		throw std::invalid_argument( "Index out of range!" );
+		throw ListError( "Index out of range!" );
 
 	iterator it = begin();
 	for( int i = 0; i < x; i++ )
@@ -267,7 +256,7 @@ template<typename T>
 void List<T>::insert( const_iterator& pos, const T& elem )
 {
 	if( pos.current == head )
-		throw std::invalid_argument( "Invalid iterator!" );
+		throw ListError( "Invalid iterator!" );
 
 	Node* temp = new Node( elem );
 	temp->next = pos.current;
@@ -282,7 +271,7 @@ template<typename T>
 void List<T>::insert( const_iterator & pos, T && elem )
 {
 	if( pos.current == head )
-		throw std::invalid_argument( "Invalid iterator!" );
+		throw ListError( "Invalid iterator!" );
 
 	Node* temp = new Node( elem );
 	temp->next = pos.current;
@@ -297,12 +286,12 @@ template<typename T>
 void List<T>::erase( const_iterator& pos )
 {
 	if( pos.current == head || pos.current == tail )
-		throw std::invalid_argument( "Invalid iterator!" );
+		throw ListError( "Invalid iterator!" );
 
 	Node* temp = pos.current;
 	temp->next->previous = temp->previous;
 	temp->previous->next = temp->next;
-	
+
 	delete temp;
 	length--;
 }
@@ -327,27 +316,3 @@ bool List<T>::operator==( const List& rhs ) const noexcept
 
 	return true;
 }
-/*
-template<typename T>
-List<T>::iterator& List<T>::iterator::operator=( const iterator & rhs )
-{
-	if( this == &rhs )
-		return *this;
-
-	current = rhs.current;
-
-	returtn *this;
-}
-
-template<typename T>
-List<T>::iterator& List<T>::iterator::operator=( iterator && rhs )
-{
-	if( this == &rhs )
-		return *this;
-
-	current = std::move( rhs.current );
-	rhs.current = nullptr;
-
-	return *this;
-}
-*/

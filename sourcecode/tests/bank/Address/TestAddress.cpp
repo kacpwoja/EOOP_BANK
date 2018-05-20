@@ -2,6 +2,10 @@
 
 void tests::testAddress::testAddress()
 {
+	testConstructors();
+	testGetSet();
+	testGetSet();
+
 }
 
 void tests::testAddress::testConstructors()
