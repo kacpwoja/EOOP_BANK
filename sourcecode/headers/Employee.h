@@ -27,6 +27,13 @@ public:
 			  std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() ):
 		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalHours( 0 ), totalEarnings( 0 ), positions() {};
 	~Employee();
+
+	Employee( const Employee& src ) = delete;
+	Employee( Employee&& src ) = default;
+
+	Employee& operator=( const Employee& rhs ) = delete;
+	Employee& operator=( Employee&& rhs ) = default;
+
 	void newJob( Bank::Branch* branch, double wage, int hours );
 	void quit( Bank::Branch* branch );
 	const List<Position>& getPositions() const noexcept { return positions; };

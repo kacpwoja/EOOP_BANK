@@ -2,6 +2,8 @@
 #include <iomanip>
 #include <string>
 #include <stdexcept>
+#include <utility>
+
 #include "../headers/Account.h"
 #include "../headers/Branch.h"
 
@@ -11,6 +13,29 @@ Account::~Account()
 {
 	if ( client != nullptr )
 	client->closeAccount( this );
+}
+
+Account::Account( Account && src )
+{
+	accountNumber = std::move( src.accountNumber );
+	balance = std::move( src.balance );
+	transactions = std::move( src.transactions );
+	client = src.client;
+	src.client = nullptr;
+}
+
+Account& Account::operator=( Account && rhs )
+{
+	if( this == &rhs )
+		return *this;
+
+	accountNumber = std::move( rhs.accountNumber );
+	balance = std::move( rhs.balance );
+	transactions = std::move( rhs.transactions );
+	client = rhs.client;
+	rhs.client = nullptr;
+
+	return *this;
 }
 
 void Account::deposit( double amount, std::string title )

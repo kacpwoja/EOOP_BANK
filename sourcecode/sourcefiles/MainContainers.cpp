@@ -20,6 +20,16 @@ bool PeopleList::idExists( std::string id ) const noexcept
 	return false;
 }
 
+PeopleList& PeopleList::operator=( PeopleList&& rhs )
+{
+	if( this == &rhs )
+		return *this;
+
+	people = std::move( rhs.people );
+
+	return *this;
+}
+
 void PeopleList::addClient( std::string id )
 {
 	if( idExists( id ) )

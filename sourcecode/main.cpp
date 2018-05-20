@@ -5,24 +5,18 @@ int main()
 {
 	BankList banks;
 	PeopleList people;
-	int i;
-	std::cin >> i;
 	banks.addBank( "Super Bank" );
-	std::cin >> i;
-	Bank superb = banks.getBank( "Super Bank" );
-	superb.newBranch( "69" );
-	std::cin >> i;
-	Bank::Branch br = superb.getBranch( "69" );
-	std::cin >> i;
+	//Bank superb = banks.getBank( "Super Bank" );
+	banks.getBank( "Super Bank" ).newBranch( "69" );
+	//Bank::Branch br = superb.getBranch( "69" );
 	people.addClient( "PESOL" );
-	std::cin >> i;
 	std::cerr << "1\n";
-	br.newAccount( (Client*) &people.getPerson( "PESOL" ), "numbor" );
+	banks.getBank( "Super Bank" ).getBranch( "69" ).newAccount( (Client*) &people.getPerson( "PESOL" ), "numbor" );
 	std::cerr << "1\n";
-	std::cin >> i;
 	people.addEmployee( "ZBYCH" );
-	std::cin >> i;
-	br.hire( (Employee*)&people.getPerson( "ZBYCH" ), 200, 10 );
+	banks.getBank( "Super Bank" ).getBranch( "69" ).hire( (Employee*)&people.getPerson( "ZBYCH" ), 200, 10 );
+
+	int i;
 	std::cin >> i;
 
 	return 0;

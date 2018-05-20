@@ -13,9 +13,12 @@ class PeopleList
 	bool idExists( std::string id ) const noexcept;
 public:
 	PeopleList(): people() {};
-	~PeopleList() = default;
-	PeopleList( const PeopleList& src ): people( src.people ) {};
-	PeopleList& operator=( const PeopleList& rhs ) { people = rhs.people; };
+	~PeopleList();
+
+	PeopleList( const PeopleList& src ) = delete;
+	PeopleList( PeopleList&& src ): people() { people = std::move( src.people ); };
+	PeopleList& operator=( const PeopleList& rhs ) = delete;
+	PeopleList& operator=( PeopleList&& rhs );
 
 	void addClient( std::string id );
 	void addClient( std::string nName, std::string nSurname, std::string nID, Address nAddress );

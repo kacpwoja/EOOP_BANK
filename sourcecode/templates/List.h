@@ -3,6 +3,7 @@
 #include <functional>
 #include <exception>
 #include <stdexcept>
+#include <utility>
 
 template<typename T>
 class List
@@ -13,7 +14,8 @@ class List
 		Node* next;
 		Node* previous;
 		Node() {};
-		Node( T v ): val( v ) {};
+		Node( const T& v ): val( v ) {};
+		Node( T&& v ): val( std::move( v ) ) {};
 	};
 
 	Node* head;
@@ -28,9 +30,29 @@ public:
 	public:
 		iterator(): current( nullptr ) {};
 		iterator( const iterator& src ) { current = src.current; };
+		iterator( iterator&& src ) { current = std::move( current ); };
 		iterator( Node* src ) { current = src; };
 		~iterator() = default;
-		iterator& operator=( const iterator& rhs ) { current = rhs.current; return *this; };
+
+		iterator& operator=( const iterator& rhs )
+		{
+			if( this == &rhs )
+				return *this;
+
+			current = rhs.current;
+
+			returtn *this;
+		};
+		iterator& operator=( iterator&& rhs )
+		{
+			if( this == &rhs )
+				return *this;
+
+			current = std::move( rhs.current );
+			rhs.current = nullptr;
+
+			return *this;
+		};
 
 		bool operator==( const iterator& rhs ) const noexcept { return current == rhs.current; };
 		bool operator!=( const iterator& rhs ) const noexcept { return current != rhs.current; };
@@ -49,12 +71,17 @@ public:
 	typedef const iterator const_iterator;
 
 	List();
-	List( const List& src ): List() { *this = src; };
+	List( const List& src ) { *this = src; };
+	List( List&& src );
 	~List();
+
 	List& operator=( const List& rhs );
+	List& operator=( List&& rhs );
 
 	void push_back( const T& elem );
+	void push_back( T&& elem );
 	void push_front( const T& elem );
+	void push_front( T&& elem );
 	void pop_back();
 	void pop_front();
 	T& front() const noexcept { return head->next->val; };
@@ -68,6 +95,7 @@ public:
 	iterator end() const noexcept { return iterator( tail ); };
 
 	void insert( const_iterator& pos, const T& elem );
+	void insert( const_iterator& pos, T&& elem );
 	void erase( const_iterator& pos );
 
 	bool operator==( const List& rhs ) const noexcept;
@@ -89,6 +117,18 @@ List<T>::List()
 }
 
 template<typename T>
+List<T>::List( List && src )
+{
+	head = std::move( src.head );
+	tail = std::move( src.tail );
+	length = std::move( src.length );
+
+	src.length = 0;
+	src.head = nullptr;
+	src.tail = nullptr;
+}
+
+template<typename T>
 List<T>& List<T>::operator=( const List& rhs )
 {
 	if( &rhs == this )
@@ -99,6 +139,24 @@ List<T>& List<T>::operator=( const List& rhs )
 	{
 		push_back( *it );
 	}
+
+	return *this;
+}
+
+template<typename T>
+List<T>& List<T>::operator=( List && rhs )
+{
+	if( this == &rhs )
+		return *this;
+
+	clear();
+	head = std::move( rhs.head );
+	tail = std::move( rhs.tail );
+	length = std::move( rhs.length );
+
+	rhs.length = 0;
+	rhs.head = nullptr;
+	rhs.tail = nullptr;
 
 	return *this;
 }
@@ -124,7 +182,29 @@ void List<T>::push_back( const T& elem )
 }
 
 template<typename T>
+void List<T>::push_back( T && elem )
+{
+	Node* temp = new Node( elem );
+	temp->next = tail;
+	temp->previous = tail->previous;
+	tail->previous->next = temp;
+	tail->previous = temp;
+	length++;
+}
+
+template<typename T>
 void List<T>::push_front( const T& elem )
+{
+	Node* temp = new Node( elem );
+	temp->next = head->next;
+	temp->previous = head;
+	head->next->previous = temp;
+	head->next = temp;
+	length++;
+}
+
+template<typename T>
+void List<T>::push_front( T && elem )
 {
 	Node* temp = new Node( elem );
 	temp->next = head->next;
@@ -189,7 +269,22 @@ void List<T>::insert( const_iterator& pos, const T& elem )
 	if( pos.current == head )
 		throw std::invalid_argument( "Invalid iterator!" );
 
-	Node* temp = new Node( val = elem );
+	Node* temp = new Node( elem );
+	temp->next = pos.current;
+	temp->previous = pos.current->previous;
+	pos.current->previous->next = temp;
+	pos.current->previous = temp;
+
+	length++;
+}
+
+template<typename T>
+void List<T>::insert( const_iterator & pos, T && elem )
+{
+	if( pos.current == head )
+		throw std::invalid_argument( "Invalid iterator!" );
+
+	Node* temp = new Node( elem );
 	temp->next = pos.current;
 	temp->previous = pos.current->previous;
 	pos.current->previous->next = temp;
@@ -232,3 +327,27 @@ bool List<T>::operator==( const List& rhs ) const noexcept
 
 	return true;
 }
+/*
+template<typename T>
+List<T>::iterator& List<T>::iterator::operator=( const iterator & rhs )
+{
+	if( this == &rhs )
+		return *this;
+
+	current = rhs.current;
+
+	returtn *this;
+}
+
+template<typename T>
+List<T>::iterator& List<T>::iterator::operator=( iterator && rhs )
+{
+	if( this == &rhs )
+		return *this;
+
+	current = std::move( rhs.current );
+	rhs.current = nullptr;
+
+	return *this;
+}
+*/

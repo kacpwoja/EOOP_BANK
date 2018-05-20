@@ -7,8 +7,24 @@
 
 Employee::~Employee()
 {
+	for( List<Position>::iterator it = positions.begin(); it != positions.end(); it++ )
+	{
+		it->employer->fire( this );
+	}
 }
 
+/*
+Employee::Employee( Employee && src )
+{
+	name = std::move( src.name );
+	surname = std::move( src.surname );
+	id = std::move( src.id );
+	address = std::move( src.address );
+	totalHours = std::move( src.totalHours );
+	totalEarnings = std::move( src.totalEarnings );
+	positions = std::move( src.positions );
+}
+*/
 void Employee::newJob( Bank::Branch * branch, double wage, int hours )
 {
 	for( List<Position>::const_iterator it = positions.begin(); it != positions.end(); it++ )

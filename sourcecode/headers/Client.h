@@ -20,6 +20,13 @@ public:
 			std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() ):
 		Person( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo ), totalBalance( 0 ), accounts() {};
 	~Client();
+
+	Client( const Client& src ) = delete;
+	Client( Client&& src ) = default;
+
+	Client& operator=( const Client& rhs ) = delete;
+	Client& operator=( Client&& rhs ) = default;
+
 	void newAccount( Account* acc );
 	void closeAccount( Account* acc );
 	const List<Account*>& getAccounts() const noexcept { return accounts; };
