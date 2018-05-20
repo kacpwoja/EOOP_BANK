@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../templates/List.h"
+#include "../../list/List.h"
 #include "Bank.h"
 #include "Branch.h"
 #include "Person.h"

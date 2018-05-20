@@ -1,6 +1,6 @@
 #include <stdexcept>
 #include "../headers/Client.h"
-#include "../templates/List.h"
+#include "../../list/List.h"
 #include "../headers/Branch.h"
 
 Client::~Client()

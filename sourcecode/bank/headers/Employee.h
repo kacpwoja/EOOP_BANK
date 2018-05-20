@@ -2,7 +2,7 @@
 
 #include "Person.h"
 #include "Bank.h"
-#include "../templates/List.h"
+#include "../../list/List.h"
 
 class Employee:
 	public Person

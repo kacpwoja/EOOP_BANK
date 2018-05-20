@@ -6,6 +6,7 @@
 #include "Account.h"
 #include "Employee.h"
 #include "Client.h"
+#include "../../list/List.h"
 
 class Bank::Branch
 {

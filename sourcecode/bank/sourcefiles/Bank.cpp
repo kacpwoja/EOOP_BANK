@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "../headers/Bank.h"
 #include "../headers/Branch.h"
-#include "../templates/List.h"
+#include "../../list/List.h"
 
 bool Bank::idExists( std::string id ) const noexcept
 {

@@ -3,8 +3,8 @@
 #include <string>
 #include <iostream>
 #include "Bank.h"
-#include "../headers/Client.h"
-#include "../templates/List.h"
+#include "Client.h"
+#include "../../list/List.h"
 
 class Client;
 

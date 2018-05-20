@@ -2,7 +2,7 @@
 
 #include <string>
 #include "Address.h"
-#include "../templates/List.h"
+#include "../../list/List.h"
 
 class Bank
 {

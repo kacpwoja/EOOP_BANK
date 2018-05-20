@@ -2,7 +2,7 @@
 
 #include "Person.h"
 #include "Account.h"
-#include "../templates/List.h"
+#include "../../list/List.h"
 
 class Account;
 

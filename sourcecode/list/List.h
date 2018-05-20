@@ -319,7 +319,7 @@ bool List<T>::operator==( const List& rhs ) const noexcept
 	if( rhs.empty() )
 		return true;
 
-	for( iterator it = begin(), iterator rhit = rhs.begin(); it != end(), rhit != rhs.end(); it++, rhs++ )
+	for( typename List<T>::const_iterator it = begin(), rhit = rhs.begin(); it != end(), rhit != rhs.end(); it++, rhit++ )
 	{
 		if( *it != *rhit )
 			return false;
