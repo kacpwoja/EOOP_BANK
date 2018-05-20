@@ -10,7 +10,7 @@ public:
 	class Branch;
 private:
 	std::string name;
-	List<Branch> branches;
+	List<Branch*> branches;
 
 	bool idExists( std::string id ) const noexcept;
 public:
@@ -28,7 +28,7 @@ public:
 	void newBranch( std::string branchID, Address address );
 
 	Branch& getBranch( std::string branchID ) const;
-	const List<Branch>& getBranches() const noexcept { return branches; };
+	const List<Branch*>& getBranches() const noexcept { return branches; };
 
 	void removeBranch( std::string branchID );
 

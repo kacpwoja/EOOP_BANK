@@ -20,6 +20,14 @@ bool PeopleList::idExists( std::string id ) const noexcept
 	return false;
 }
 
+PeopleList::~PeopleList()
+{
+	for( auto it = people.begin(); it != people.end(); it++ )
+	{
+		delete *it;
+	}
+}
+
 PeopleList& PeopleList::operator=( PeopleList&& rhs )
 {
 	if( this == &rhs )
