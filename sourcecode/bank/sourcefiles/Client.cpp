@@ -14,10 +14,11 @@ void Client::newAccount( Account * acc )
 	for( List<Account*>::const_iterator it = accounts.begin(); it != accounts.end(); it++ )
 	{
 		if( *it == acc )
-			throw std::invalid_argument( "Account already exists!" );
+			throw ClientError( "Account already exists!" );
 	}
 
 	accounts.push_back( acc );
+	totalBalance += acc->getBalance();
 }
 
 void Client::closeAccount( Account * acc )
@@ -27,10 +28,11 @@ void Client::closeAccount( Account * acc )
 		if( *it == acc )
 		{
 			accounts.erase( it );
-			break;
+			totalBalance -= acc->getBalance();
+			return;
 		}
 	}
-	throw std::invalid_argument( "No such account exists!" );
+	throw ClientError( "No such account exists!" );
 }
 
 void Client::update() noexcept

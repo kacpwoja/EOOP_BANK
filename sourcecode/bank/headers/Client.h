@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include "Person.h"
 #include "Account.h"
 #include "../../list/List.h"
@@ -12,6 +13,13 @@ class Client:
 	List<Account*> accounts;
 	double totalBalance;
 public:
+	class ClientError: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+
 	Client( std::string id ):
 		Person( id ), totalBalance( 0 ), accounts() {};
 	Client( std::string nName, std::string nSurname, std::string nID, Address nAddress ):

@@ -7,6 +7,5 @@ namespace tests
 		void testClient();
 		void testConstructors();
 		void testAccounts();
-		void testGet();
 	}
 }

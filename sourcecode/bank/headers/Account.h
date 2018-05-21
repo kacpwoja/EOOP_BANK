@@ -20,7 +20,7 @@ class Account
 	double balance;
 	List<Transaction> transactions;
 public:
-	Account(): transactions(), client( nullptr ) {};
+	Account() = delete;
 	Account( Client* client, std::string number, double balance = 0 ): client( client ), balance( balance ), accountNumber( number ), transactions() {};
 	~Account();
 

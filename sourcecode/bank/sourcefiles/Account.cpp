@@ -6,13 +6,21 @@
 
 #include "../headers/Account.h"
 #include "../headers/Branch.h"
+#include "../headers/Client.h"
+#include "../../list/List.h"
 
 #define MAXTRANSACTIONS 10
 
 Account::~Account()
 {
-	if ( client != nullptr )
-	client->closeAccount( this );
+	if( client != nullptr )
+	{
+		for( List<Account*>::const_iterator it = client->getAccounts().begin(); it != client->getAccounts().end(); it++ )
+		{
+			if( *it == this )
+				client->closeAccount( this );
+		}
+	}
 }
 
 Account::Account( Account && src )
