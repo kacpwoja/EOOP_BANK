@@ -20,6 +20,7 @@ public:
 
 	Person( const Person& src ) = default;
 	Person( Person&& src ) = default;
+
 	Person& operator=( const Person& rhs ) = default;
 	Person& operator=( Person&& rhs ) = default;
 

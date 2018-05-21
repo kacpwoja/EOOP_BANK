@@ -7,6 +7,8 @@ namespace tests
 		void testPerson();
 		void testConstructors();
 		void testGetSet();
-		void testCopy();
+		void testCompare();
+		void testCopyAssign();
+		void testFullName();
 	}
 }

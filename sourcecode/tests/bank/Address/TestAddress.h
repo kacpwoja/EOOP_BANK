@@ -8,5 +8,7 @@ namespace tests
 		void testConstructors();
 		void testGetSet();
 		void testToString();
+		void testCopyAssign();
+		void testCompare();
 	}
 }

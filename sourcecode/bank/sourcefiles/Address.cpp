@@ -1,5 +1,4 @@
 #include <string>
-#include <stdexcept>
 #include <regex>
 #include "../headers/Address.h"
 
@@ -10,10 +9,35 @@ bool Address::zipCorrect( std::string zip ) const noexcept
 	return regex_match( zip, zr );
 }
 
+bool Address::isWords( std::string in ) const noexcept
+{
+	return true;
+}
+
+bool Address::isNumber( std::string in ) const noexcept
+{
+	return true;
+}
+
 Address::Address( std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo )
 {
 	if( !zipCorrect( nZip ) )
-		throw std::invalid_argument( "Wrong Zip Code format!" );
+		throw AddressError( "Wrong Zip Code format!" );
+
+	if( !isWords( nCity ) )
+		throw AddressError( "City name format incorrect!" );
+
+	if( !isWords( nStreet ) )
+		throw AddressError( "Street name format incorrect!" );
+
+	if( !isNumber( nBuildNo ) )
+		throw AddressError( "Building number is not a number!" );
+
+	if( !flatNo.empty() )
+	{
+		if( !isNumber( nFlatNo ) )
+			throw AddressError( "Flat number is not a number!" );
+	}
 
 	zipCode = nZip;
 	city = nCity;
@@ -25,16 +49,19 @@ Address::Address( std::string nCity, std::string nZip, std::string nStreet, std:
 
 bool Address::operator==( const Address & rhs ) const noexcept
 {
-	return false;
+	return zipCode == rhs.zipCode && city == rhs.city && street == rhs.street && buildingNo == rhs.buildingNo && flatNo == rhs.flatNo;
 }
 
 bool Address::operator!=( const Address & rhs ) const noexcept
 {
-	return false;
+	return zipCode != rhs.zipCode || city != rhs.city || street != rhs.street || buildingNo != rhs.buildingNo || flatNo != rhs.flatNo;
 }
 
-std::string Address::toString() const noexcept
+std::string Address::toString() const
 {
+	if( zipCode.empty() )
+		throw AddressError( "Address is empty" );
+
 	std::string out = street + " " + buildingNo;
 	if( !flatNo.empty() )
 		out += "/" + flatNo;
@@ -46,7 +73,23 @@ std::string Address::toString() const noexcept
 void Address::set( std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo )
 {
 	if( !zipCorrect( nZip ) )
-		throw std::invalid_argument( "Wrong Zip Code format!" );
+		throw AddressError( "Wrong Zip Code format!" );
+
+	if( !isWords( nCity ) )
+		throw AddressError( "City name format incorrect!" );
+
+	if( !isWords( nStreet ) )
+		throw AddressError( "Street name format incorrect!" );
+
+	if( !isNumber( nBuildNo ) )
+		throw AddressError( "Building number is not a number!" );
+
+	if( !flatNo.empty() )
+	{
+		if( !isNumber( nFlatNo ) )
+			throw AddressError( "Flat number is not a number!" );
+	}
+
 
 	zipCode = nZip;
 	city = nCity;
