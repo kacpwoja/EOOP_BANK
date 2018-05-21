@@ -14,6 +14,7 @@ void tests::testAddress::testAddress()
 
 void tests::testAddress::testConstructors()
 {
+	//Testing default constructor
 	Address test;
 	if( test.getCity() != std::string() )
 		errorlog.log( "Address: default constructor: members not empty" );
@@ -22,7 +23,7 @@ void tests::testAddress::testConstructors()
 	std::string street = "TestStreet";
 	std::string zip = "00-000";
 	std::string num = "10";
-
+	//Testing constructor with arguments
 	try
 	{
 		Address test2( city, zip, street, num );
@@ -84,6 +85,7 @@ void tests::testAddress::testGetSet()
 	std::string street = "TestStreet";
 	std::string zip = "00-000";
 	std::string num = "10";
+	//Testing correct arguments
 	try
 	{
 		test.set( city, zip, street, num, num );
@@ -96,7 +98,7 @@ void tests::testAddress::testGetSet()
 	if( test.getCity() != city || test.getStreet() != street || test.getZipCode() != zip ||
 		test.getBuildingNumber() != num || test.getFlatNumber() != num )
 		errorlog.log( "Address: set: members not matching input" );
-
+	//Testing exceptions
 	try
 	{
 		test.set( "123", zip, street, num, num );
