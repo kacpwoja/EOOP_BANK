@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <stdexcept>
 #include "Bank.h"
 #include "Client.h"
 #include "../../list/List.h"
@@ -20,6 +21,12 @@ class Account
 	double balance;
 	List<Transaction> transactions;
 public:
+	class AccountError final: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
 	Account() = delete;
 	Account( Client* client, std::string number, double balance = 0 ): client( client ), balance( balance ), accountNumber( number ), transactions() {};
 	~Account();

@@ -6,7 +6,6 @@ namespace tests
 	{
 		void testAccount();
 		void testConstructors();
-		void testGet();
-		void testChange();
+		void testTransactions();
 	}
 }
