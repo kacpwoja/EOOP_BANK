@@ -117,7 +117,15 @@ void tests::testList::testIterator()
 		errorlog.log( "List: iterator: operator--(pre): operator* test error" );
 
 	if( test[5] != 5 )
-		errorlog.log( "List: iterator: operator[] error" );
+		errorlog.log( "List: iterator: operator[] error: wrong value" );
+
+	try
+	{
+		int i = test[ 20 ];
+		errorlog.log( "List: iterator: operator[] error: no exception thrown" );
+	}
+	catch( List<int>::ListError e )
+	{}
 
 	List<int>::iterator it2 = test.begin();
 	it2++;

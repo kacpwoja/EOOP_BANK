@@ -23,6 +23,9 @@ public:
 	Address& operator=( const Address& rhs ) = default;
 	Address& operator=( Address&& rhs ) = default;
 
+	bool operator==( const Address& rhs ) const noexcept;
+	bool operator!=( const Address& rhs ) const noexcept;
+
 	std::string toString() const noexcept;
 
 	void set( std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() );

@@ -23,6 +23,16 @@ Address::Address( std::string nCity, std::string nZip, std::string nStreet, std:
 	flatNo = nFlatNo;
 }
 
+bool Address::operator==( const Address & rhs ) const noexcept
+{
+	return false;
+}
+
+bool Address::operator!=( const Address & rhs ) const noexcept
+{
+	return false;
+}
+
 std::string Address::toString() const noexcept
 {
 	std::string out = street + " " + buildingNo;

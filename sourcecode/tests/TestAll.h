@@ -16,6 +16,7 @@ namespace tests
 {
 	void testAll()
 	{
+		errorlog.log( "Example error log entry" );
 		testList::testList();
 		testAddress::testAddress();
 		testPerson::testPerson();
