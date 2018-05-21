@@ -36,15 +36,42 @@ void tests::testAddress::testConstructors()
 		errorlog.log( "Address: constructor: exception thrown when data correct: " + error );
 	}
 
-	city = "123";
-	street = "234";
-	zip = "abcd";
-	num = "aa";
+	try
+	{
+		Address test3( "123", zip, street, num, num );
+		errorlog.log( "Address: constructor: no exception thrown when city incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
 
 	try
 	{
-		Address test3( city, zip, street, num, num );
-		errorlog.log( "Address: constructor: no exception thrown when data incorrect" );
+		Address test3( city, "aaa", street, num, num );
+		errorlog.log( "Address: constructor: no exception thrown when zip incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		Address test3( city, zip, "123", num, num );
+		errorlog.log( "Address: constructor: no exception thrown when street incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		Address test3( city, zip, street, "abc", num );
+		errorlog.log( "Address: constructor: no exception thrown when building number incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		Address test3( city, zip, street, num, "abc" );
+		errorlog.log( "Address: constructor: no exception thrown when flat number incorrect" );
 	}
 	catch( Address::AddressError e )
 	{}
@@ -70,15 +97,42 @@ void tests::testAddress::testGetSet()
 		test.getBuildingNumber() != num || test.getFlatNumber() != num )
 		errorlog.log( "Address: set: members not matching input" );
 
-	city = "123";
-	street = "234";
-	zip = "abcd";
-	num = "aa";
+	try
+	{
+		test.set( "123", zip, street, num, num );
+		errorlog.log( "Address: set: no exception thrown when city incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
 
 	try
 	{
-		test.set( city, zip, street, num, num );
-		errorlog.log( "Address: set: no exception thrown when data incorrect" );
+		test.set( city, "aaa", street, num, num );
+		errorlog.log( "Address: set: no exception thrown when zip incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		test.set( city, zip, "123", num, num );
+		errorlog.log( "Address: set: no exception thrown when street incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		test.set( city, zip, street, "abc", num );
+		errorlog.log( "Address: set: no exception thrown when building number incorrect" );
+	}
+	catch( Address::AddressError e )
+	{}
+
+	try
+	{
+		test.set( city, zip, street, num, "abc" );
+		errorlog.log( "Address: set: no exception thrown when flat number incorrect" );
 	}
 	catch( Address::AddressError e )
 	{}

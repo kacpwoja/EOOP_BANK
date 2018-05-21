@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <stdexcept>
 #include "Address.h"
 
 class Person
@@ -11,6 +12,12 @@ protected:
 	std::string id;
 	Address address;
 public:
+	class PersonError final: std::invalid_argument
+	{
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+
 	Person() {};
 	Person( std::string id );
 	Person( std::string nName, std::string nSurname, std::string nID, Address nAddress );
@@ -23,6 +30,9 @@ public:
 
 	Person& operator=( const Person& rhs ) = default;
 	Person& operator=( Person&& rhs ) = default;
+
+	bool operator==( const Person& rhs ) const noexcept;
+	bool operator!=( const Person& rhs ) const noexcept;
 
 	const Address& getAddress() const noexcept { return address; };
 	std::string getName() const noexcept { return name; };

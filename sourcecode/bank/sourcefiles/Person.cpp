@@ -24,6 +24,16 @@ Person::Person( std::string nName, std::string nSurname, std::string nID, std::s
 	address = Address( nCity, nZip, nStreet, nBuildNo, nFlatNo );
 }
 
+bool Person::operator==( const Person & rhs ) const noexcept
+{
+	return false;
+}
+
+bool Person::operator!=( const Person & rhs ) const noexcept
+{
+	return false;
+}
+
 void Person::setName( std::string nName, std::string nSurname )
 {
 	name = nName;
