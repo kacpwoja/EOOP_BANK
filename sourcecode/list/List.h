@@ -106,15 +106,21 @@ List<T>::List()
 }
 
 template<typename T>
-List<T>::List( List && src )
+List<T>::List( List&& src )
 {
-	head = std::move( src.head );
-	tail = std::move( src.tail );
-	length = std::move( src.length );
+	head = new Node();
+	tail = new Node();
+	head->previous = nullptr;
+	tail->next = nullptr;
 
+	head->next = std::move( src.head->next );
+	src.head->next = src.tail;
+
+	tail->previous = std::move( src.tail->previous );
+	src.tail->previous = src.head;
+
+	length = std::move( src.length );
 	src.length = 0;
-	src.head = nullptr;
-	src.tail = nullptr;
 }
 
 template<typename T>
@@ -139,13 +145,14 @@ List<T>& List<T>::operator=( List && rhs )
 		return *this;
 
 	clear();
-	head = std::move( rhs.head );
-	tail = std::move( rhs.tail );
-	length = std::move( rhs.length );
+	head->next = std::move( rhs.head->next );
+	rhs.head->next = rhs.tail;
 
+	tail->previous = std::move( rhs.tail->previous );
+	rhs.tail->previous = rhs.head;
+
+	length = std::move( rhs.length );
 	rhs.length = 0;
-	rhs.head = nullptr;
-	rhs.tail = nullptr;
 
 	return *this;
 }

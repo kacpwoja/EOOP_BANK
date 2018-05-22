@@ -74,5 +74,12 @@ void tests::testAccount::testTransactions()
 		errorlog.log( "Account: withdraw: unexpected exception thrown" );
 	}
 	//Incorrect value
+	try
+	{
+		test.withdraw( 3000, "wrong" );
+		errorlog.log( "Account: withdraw: no exception thrown" );
+	}
+	catch( Account::AccountError e )
+	{}
 }
 

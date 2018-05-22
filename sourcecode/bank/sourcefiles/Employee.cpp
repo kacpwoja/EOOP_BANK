@@ -7,33 +7,21 @@
 
 Employee::~Employee()
 {
-	for( List<Position>::iterator it = positions.begin(); it != positions.end(); it++ )
+	while( !positions.empty() )
 	{
-		it->employer->fire( this );
+		quit( positions.front().employer );
 	}
 }
 
-/*
-Employee::Employee( Employee && src )
-{
-	name = std::move( src.name );
-	surname = std::move( src.surname );
-	id = std::move( src.id );
-	address = std::move( src.address );
-	totalHours = std::move( src.totalHours );
-	totalEarnings = std::move( src.totalEarnings );
-	positions = std::move( src.positions );
-}
-*/
-void Employee::newJob( Bank::Branch * branch, double wage, int hours )
+void Employee::newJob( Bank::Branch* branch, double wage, int hours )
 {
 	for( List<Position>::const_iterator it = positions.begin(); it != positions.end(); it++ )
 	{
 		if( it->employer == branch )
-			throw std::invalid_argument( "Already employed at this branch!" );
+			throw EmployeeError( "Already employed at this branch!" );
 	}
 	if( totalHours + hours >= MAXHOURS )
-		throw std::invalid_argument( "Too many hours!" );
+		throw EmployeeError( "Too many hours!" );
 
 	Position temp;
 	temp.employer = branch;
@@ -43,6 +31,13 @@ void Employee::newJob( Bank::Branch * branch, double wage, int hours )
 
 	totalEarnings += wage;
 	totalHours += hours;
+
+	for( auto it = branch->getEmployees().begin(); it != branch->getEmployees().begin(); it++ )
+	{
+		if( *it == this )
+			return;
+	}
+	branch->hire( this, wage, hours );
 }
 
 void Employee::quit( Bank::Branch * branch )
@@ -54,18 +49,16 @@ void Employee::quit( Bank::Branch * branch )
 			totalHours -= it->hours;
 			totalEarnings -= it->wage;
 			positions.erase( it );
+			for( auto ite = branch->getEmployees().begin(); ite != branch->getEmployees().begin(); ite++ )
+			{
+				if( *ite == this )
+				{
+					branch->fire( this );
+					return;
+				}
+			}
 			return;
 		}
 	}
 	throw std::invalid_argument( "Not employed at this branch!" );
-}
-
-const List<Bank::Branch*> Employee::getEmployers() const noexcept
-{
-	List<Bank::Branch*> out;
-	for( List<Position>::const_iterator it = positions.begin(); it != positions.end(); it++ )
-	{
-		out.push_back( it->employer );
-	}
-	return out;
 }

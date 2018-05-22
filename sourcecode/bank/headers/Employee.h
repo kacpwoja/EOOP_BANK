@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include "Person.h"
 #include "Bank.h"
 #include "../../list/List.h"
@@ -19,6 +20,13 @@ private:
 	double totalEarnings;
 	int totalHours;
 public:
+	class EmployeeError final: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+	
 	Employee( std::string id ):
 		Person( id ), totalHours( 0 ), totalEarnings( 0 ), positions() {};
 	Employee( std::string nName, std::string nSurname, std::string nID, Address nAddress ):
@@ -36,8 +44,8 @@ public:
 
 	void newJob( Bank::Branch* branch, double wage, int hours );
 	void quit( Bank::Branch* branch );
+
 	const List<Position>& getPositions() const noexcept { return positions; };
-	const List<Bank::Branch*> getEmployers() const noexcept;
 	int getHours() const noexcept { return totalHours; };
 	double getEarnings() const noexcept { return totalEarnings; };
 };

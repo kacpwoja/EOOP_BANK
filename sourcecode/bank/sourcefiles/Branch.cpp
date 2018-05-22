@@ -7,9 +7,9 @@
 
 Bank::Branch::~Branch()
 {
-	for( List<Employee*>::iterator it = employees.begin(); it != employees.end(); it++ )
+	while( !employees.empty() )
 	{
-		fire( *it );
+		fire( employees.front() );
 	}
 }
 
@@ -67,17 +67,30 @@ void Bank::Branch::hire( Employee* emp, double wage, int hours )
 	}
 
 	employees.push_back( emp );
+	for( auto it = emp->getPositions().begin(); it != emp->getPositions().end(); it++ )
+	{
+		if( it->employer == this )
+			return;
+	}
 	emp->newJob( this, wage, hours );
 }
 
 void Bank::Branch::fire( Employee* emp )
 {
-	for( List<Employee*>::iterator it = employees.begin(); it != employees.end(); it++ )
+	for( auto it = employees.begin(); it != employees.end(); it++ )
 	{
 		if( *it == emp )
 		{
 			employees.erase( it );
-			emp->quit( this );
+			for( auto ite = emp->getPositions().begin(); ite != emp->getPositions().end(); ite++ )
+			{
+				if( ite->employer == this )
+				{
+					emp->quit( this );
+					return;
+				}
+			}
+			return;
 		}
 	}
 
