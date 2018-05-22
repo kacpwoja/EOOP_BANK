@@ -9,7 +9,10 @@ Employee::~Employee()
 {
 	while( !positions.empty() )
 	{
-		quit( positions.front().employer );
+		if( positions.front().employer != nullptr )
+			quit( positions.front().employer );
+		else
+			positions.pop_front();
 	}
 }
 
@@ -49,7 +52,7 @@ void Employee::quit( Bank::Branch * branch )
 			totalHours -= it->hours;
 			totalEarnings -= it->wage;
 			positions.erase( it );
-			for( auto ite = branch->getEmployees().begin(); ite != branch->getEmployees().begin(); ite++ )
+			for( auto ite = branch->getEmployees().begin(); ite != branch->getEmployees().end(); ite++ )
 			{
 				if( *ite == this )
 				{
@@ -60,5 +63,5 @@ void Employee::quit( Bank::Branch * branch )
 			return;
 		}
 	}
-	throw std::invalid_argument( "Not employed at this branch!" );
+	throw EmployeeError( "Not employed at this branch!" );
 }

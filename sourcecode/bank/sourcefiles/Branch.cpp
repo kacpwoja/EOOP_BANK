@@ -9,7 +9,10 @@ Bank::Branch::~Branch()
 {
 	while( !employees.empty() )
 	{
-		fire( employees.front() );
+		if( employees.front() != nullptr )
+			fire( employees.front() );
+		else
+			employees.pop_front();
 	}
 }
 
