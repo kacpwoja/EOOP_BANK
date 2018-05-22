@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <stdexcept>
 #include "Bank.h"
 #include "Address.h"
 #include "Account.h"
@@ -16,7 +17,14 @@ class Bank::Branch
 	List<Employee*> employees;
 	List<Client*> clients;
 public:
-	Branch(): accounts(), employees(), clients() {};
+	class BranchError final: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+
+	Branch() = delete;
 	Branch( std::string id ): id( id ), accounts(), employees(), clients() {};
 	Branch( std::string id, Address address ): id( id ), address( address ), accounts(), employees(), clients() {};
 	~Branch();
@@ -31,7 +39,7 @@ public:
 	std::string getID() const noexcept { return id; };
 
 	void newAccount( Client* client, std::string number, double balance = 0 );
-	void closeAccount( std::string number );
+	void closeAccount( Account* acc );
 
 	void hire( Employee* emp, double wage, int hours );
 	void fire( Employee* emp );

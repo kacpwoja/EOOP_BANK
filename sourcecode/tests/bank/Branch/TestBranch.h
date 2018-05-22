@@ -6,7 +6,6 @@ namespace tests
 	{
 		void testBranch();
 		void testConstructors();
-		void testGet();
 		void testAccounts();
 		void testEmploying();
 	}

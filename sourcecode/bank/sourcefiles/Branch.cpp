@@ -32,21 +32,22 @@ void Bank::Branch::newAccount( Client * client, std::string number, double balan
 	clients.push_back( client );
 }
 
-void Bank::Branch::closeAccount( std::string number )
+void Bank::Branch::closeAccount( Account* acc )
 {
 	for( List<Account*>::iterator it = accounts.begin(); it != accounts.end(); it++ )
 	{
-		if( (*it)->getNumber() == number )
+		if( *it == acc )
 		{
 			Client* temp = (*it)->getOwner();
-			temp->closeAccount( *it );
 			accounts.erase( it );
+
+			delete acc;
+
 			for( it = accounts.begin(); it != accounts.end(); it++ )
 			{
-				if( (*it)->getOwner() == temp )
+				if( ( *it )->getOwner() == temp )
 					return;
 			}
-
 			for( List<Client*>::iterator itc = clients.begin(); itc != clients.end(); itc++ )
 			{
 				if( *itc == temp )
@@ -55,10 +56,10 @@ void Bank::Branch::closeAccount( std::string number )
 					return;
 				}
 			}
-			throw std::invalid_argument( "Couldn't find the client!" );
+			throw BranchError( "Couldn't find the client!" );
 		}
 	}
-	throw std::invalid_argument( "Number doesn't exist!" );
+	throw BranchError( "Number doesn't exist!" );
 }
 
 void Bank::Branch::hire( Employee* emp, double wage, int hours )
@@ -66,7 +67,7 @@ void Bank::Branch::hire( Employee* emp, double wage, int hours )
 	for( List<Employee*>::const_iterator it = employees.begin(); it != employees.end(); it++ )
 	{
 		if( *it == emp )
-			throw std::invalid_argument( "Person already employed at this branch!" );
+			throw BranchError( "Person already employed at this branch!" );
 	}
 
 	employees.push_back( emp );
@@ -97,5 +98,5 @@ void Bank::Branch::fire( Employee* emp )
 		}
 	}
 
-	throw std::invalid_argument( "Person not employed at this branch!" );
+	throw BranchError( "Person not employed at this branch!" );
 }
