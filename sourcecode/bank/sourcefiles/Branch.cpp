@@ -59,7 +59,7 @@ void Bank::Branch::closeAccount( Account* acc )
 			throw BranchError( "Couldn't find the client!" );
 		}
 	}
-	throw BranchError( "Number doesn't exist!" );
+	throw BranchError( "Account doesn't exist!" );
 }
 
 void Bank::Branch::hire( Employee* emp, double wage, int hours )

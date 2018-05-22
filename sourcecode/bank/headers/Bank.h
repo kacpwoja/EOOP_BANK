@@ -14,9 +14,16 @@ private:
 
 	bool idExists( std::string id ) const noexcept;
 public:
-	Bank(): branches() {};
+	class BankError final: std::invalid_argument
+	{
+	public:
+		using std::invalid_argument::invalid_argument;
+		using std::invalid_argument::what;
+	};
+
+	Bank() = delete;
 	Bank( std::string name ): name( name ), branches() {};
-	~Bank() = default;
+	~Bank();
 
 	Bank( const Bank& src ) = delete;
 	Bank( Bank&& src ) = default;

@@ -1,4 +1,3 @@
-#include <stdexcept>
 #include "../headers/Bank.h"
 #include "../headers/Branch.h"
 #include "../../list/List.h"
@@ -13,10 +12,16 @@ bool Bank::idExists( std::string id ) const noexcept
 	return false;
 }
 
+Bank::~Bank()
+{
+	for( auto it = branches.begin(); it != branches.end(); it++ )
+		delete *it;
+}
+
 void Bank::newBranch( std::string branchID )
 {
 	if( idExists( branchID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw BankError( "ID already exists!" );
 	
 	branches.push_back( new Branch( branchID ) );
 }
@@ -24,7 +29,7 @@ void Bank::newBranch( std::string branchID )
 void Bank::newBranch( std::string branchID, Address address )
 {
 	if( idExists( branchID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw BankError( "ID already exists!" );
 
 	branches.push_back( new Branch( branchID, address ) );
 }
@@ -36,7 +41,7 @@ Bank::Branch& Bank::getBranch( std::string branchID ) const
 		if( (*it)->getID() == branchID )
 			return **it;
 	}
-	throw std::invalid_argument( "Such ID doesn't exist!" );
+	throw BankError( "Such ID doesn't exist!" );
 }
 
 void Bank::removeBranch( std::string branchID )
@@ -45,10 +50,11 @@ void Bank::removeBranch( std::string branchID )
 	{
 		if( (*it)->getID() == branchID )
 		{
+			delete *it;
 			branches.erase( it );
 			return;
 		}
 	}
-	throw std::invalid_argument( "Such ID doesn't exist!" );
+	throw BankError( "Such ID doesn't exist!" );
 }
 

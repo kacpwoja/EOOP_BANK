@@ -35,7 +35,7 @@ void Employee::newJob( Bank::Branch* branch, double wage, int hours )
 	totalEarnings += wage;
 	totalHours += hours;
 
-	for( auto it = branch->getEmployees().begin(); it != branch->getEmployees().begin(); it++ )
+	for( auto it = branch->getEmployees().begin(); it != branch->getEmployees().end(); it++ )
 	{
 		if( *it == this )
 			return;

@@ -1,5 +1,4 @@
 #include <string>
-#include <stdexcept>
 #include "../headers/MainContainers.h"
 #include "../headers/Address.h"
 #include "../headers/Person.h"
@@ -28,20 +27,10 @@ PeopleList::~PeopleList()
 	}
 }
 
-PeopleList& PeopleList::operator=( PeopleList&& rhs )
-{
-	if( this == &rhs )
-		return *this;
-
-	people = std::move( rhs.people );
-
-	return *this;
-}
-
 void PeopleList::addClient( std::string id )
 {
 	if( idExists( id ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Client* temp = new Client( id );
 	people.push_back( temp );
@@ -50,7 +39,7 @@ void PeopleList::addClient( std::string id )
 void PeopleList::addClient( std::string nName, std::string nSurname, std::string nID, Address nAddress )
 {
 	if( idExists( nID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Client* temp = new Client( nName, nSurname, nID, nAddress );
 	people.push_back( temp );
@@ -60,7 +49,7 @@ void PeopleList::addClient( std::string nName, std::string nSurname, std::string
 							std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo )
 {
 	if( idExists( nID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Client* temp = new Client( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
 	people.push_back( temp );
@@ -69,7 +58,7 @@ void PeopleList::addClient( std::string nName, std::string nSurname, std::string
 void PeopleList::addEmployee( std::string id )
 {
 	if( idExists( id ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Employee* temp = new Employee( id );
 	people.push_back( temp );
@@ -78,7 +67,7 @@ void PeopleList::addEmployee( std::string id )
 void PeopleList::addEmployee( std::string nName, std::string nSurname, std::string nID, Address nAddress )
 {
 	if( idExists( nID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Employee* temp = new Employee( nName, nSurname, nID, nAddress );
 	people.push_back( temp );
@@ -88,7 +77,7 @@ void PeopleList::addEmployee( std::string nName, std::string nSurname, std::stri
 	std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo )
 {
 	if( idExists( nID ) )
-		throw std::invalid_argument( "ID already exists!" );
+		throw Error( "ID already exists!" );
 
 	Employee* temp = new Employee( nName, nSurname, nID, nCity, nZip, nStreet, nBuildNo, nFlatNo );
 	people.push_back( temp );
@@ -105,7 +94,7 @@ void PeopleList::removePerson( std::string id )
 		}
 	}
 
-	throw std::invalid_argument( "No such ID exists!" );
+	throw Error( "No such ID exists!" );
 }
 
 Person & PeopleList::getPerson( std::string id )
@@ -118,7 +107,7 @@ Person & PeopleList::getPerson( std::string id )
 		}
 	}
 
-	throw std::invalid_argument( "No such ID exists!" );
+	throw Error( "No such ID exists!" );
 }
 
 bool BankList::nameExists( std::string name ) const noexcept
@@ -134,7 +123,7 @@ bool BankList::nameExists( std::string name ) const noexcept
 void BankList::addBank( std::string name )
 {
 	if( nameExists( name ) )
-		throw std::invalid_argument( "Name already exists!" );
+		throw Error( "Name already exists!" );
 
 	banks.push_back( new Bank( name ) );
 }
@@ -149,7 +138,7 @@ void BankList::removeBank( std::string name )
 			return;
 		}
 	}
-	throw std::invalid_argument( "No such name exists!" );
+	throw Error( "No such name exists!" );
 }
 
 Bank & BankList::getBank( std::string name )
@@ -161,5 +150,5 @@ Bank & BankList::getBank( std::string name )
 			return **it;
 		}
 	}
-	throw std::invalid_argument( "No such name exists!" );
+	throw Error( "No such name exists!" );
 }
