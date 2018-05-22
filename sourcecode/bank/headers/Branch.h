@@ -27,6 +27,10 @@ public:
 	Branch() = delete;
 	Branch( std::string id ): id( id ), accounts(), employees(), clients() {};
 	Branch( std::string id, Address address ): id( id ), address( address ), accounts(), employees(), clients() {};
+	Branch( std::string id,
+			std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() ):
+			id( id ), address( nCity, nZip, nStreet, nBuildNo, nFlatNo ), accounts(), employees(), clients() {};
+
 	~Branch();
 
 	Branch( const Branch& src ) = delete;

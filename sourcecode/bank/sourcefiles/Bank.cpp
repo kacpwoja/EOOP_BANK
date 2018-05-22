@@ -34,6 +34,14 @@ void Bank::newBranch( std::string branchID, Address address )
 	branches.push_back( new Branch( branchID, address ) );
 }
 
+void Bank::newBranch( std::string branchID, std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo )
+{
+	if( idExists( branchID ) )
+		throw BankError( "ID already exists!" );
+
+	branches.push_back( new Branch( branchID, nCity, nZip, nStreet, nBuildNo, nFlatNo ) );
+}
+
 Bank::Branch& Bank::getBranch( std::string branchID ) const
 {
 	for( List<Branch*>::iterator it = branches.begin(); it != branches.end(); it++ )

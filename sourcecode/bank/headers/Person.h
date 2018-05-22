@@ -24,7 +24,7 @@ public:
 	Person( std::string nName, std::string nSurname, std::string nID, Address nAddress );
 	Person( std::string nName, std::string nSurname, std::string nID,
 			std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() );
-	~Person() = default;
+	virtual ~Person() = default;
 
 	Person( const Person& src ) = default;
 	Person( Person&& src ) = default;

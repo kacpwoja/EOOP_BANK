@@ -33,6 +33,8 @@ public:
 
 	void newBranch( std::string branchID );
 	void newBranch( std::string branchID, Address address );
+	void newBranch( std::string branchID,
+					std::string nCity, std::string nZip, std::string nStreet, std::string nBuildNo, std::string nFlatNo = std::string() );
 
 	Branch& getBranch( std::string branchID ) const;
 	const List<Branch*>& getBranches() const noexcept { return branches; };

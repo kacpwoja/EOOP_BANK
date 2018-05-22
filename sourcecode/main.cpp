@@ -8,6 +8,7 @@ int main()
 	outfile.open( "error_log.txt" );
 	tests::testAll();
 	tests::errorlog.print( outfile );
+	outfile.close();
 
 	return 0;
 }

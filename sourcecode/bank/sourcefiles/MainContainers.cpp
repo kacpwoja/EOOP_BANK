@@ -89,6 +89,7 @@ void PeopleList::removePerson( std::string id )
 	{
 		if( (*it)->getID() == id )
 		{
+			delete *it;
 			people.erase( it );
 			return;
 		}
@@ -120,6 +121,14 @@ bool BankList::nameExists( std::string name ) const noexcept
 	return false;
 }
 
+BankList::~BankList()
+{
+	for( auto it = banks.begin(); it != banks.end(); it++ )
+	{
+		delete *it;
+	}
+}
+
 void BankList::addBank( std::string name )
 {
 	if( nameExists( name ) )
@@ -134,6 +143,7 @@ void BankList::removeBank( std::string name )
 	{
 		if( (*it)->getName() == name )
 		{
+			delete *it;
 			banks.erase( it );
 			return;
 		}

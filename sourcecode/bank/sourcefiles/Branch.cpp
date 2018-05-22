@@ -14,6 +14,13 @@ Bank::Branch::~Branch()
 		else
 			employees.pop_front();
 	}
+	while( !accounts.empty() )
+	{
+		if( accounts.front() != nullptr )
+			closeAccount( accounts.front() );
+		else
+			accounts.pop_front();
+	}
 }
 
 void Bank::Branch::newAccount( Client * client, std::string number, double balance )

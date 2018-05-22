@@ -58,7 +58,7 @@ public:
 	};
 
 	BankList(): banks() {};
-	~BankList() = default;
+	~BankList();
 
 	BankList( const BankList& src ) = delete;
 	BankList( BankList&& src ) = default;
